@@ -1,0 +1,52 @@
+<div class="auth-page">
+  <div class="container page">
+    <div class="row">
+      <div class="col-md-6 offset-md-3 col-xs-12">
+        <!-- Header -->
+        <h1 class="text-xs-center">{{ title }}</h1>
+        <p class="text-xs-center">
+          <a [routerLink]="['/login']" *ngIf="!authTypeLogin"
+            >Have an account?</a
+          >
+          <a [routerLink]="['/register']" *ngIf="authTypeLogin"
+            >Need an account?</a
+          >
+        </p>
+
+        <!-- Auth Form -->
+        <form [formGroup]="authForm" (ngSubmit)="submitForm()">
+          <fieldSet class="form-group">
+            <input
+              *ngIf="!authTypeLogin"
+              class="form-control form-control-lg"
+              type="text"
+              formControlName="username"
+              placeholder="Username"
+            />
+          </fieldSet>
+
+          <fieldSet class="form-group">
+            <input
+              class="form-control form-control-lg"
+              type="text"
+              formControlName="email"
+              placeholder="Email"
+            />
+          </fieldSet>
+
+          <fieldSet class="form-group">
+            <input
+              class="form-control form-control-lg"
+              type="text"
+              formControlName="password"
+              placeholder="Password"
+            />
+          </fieldSet>
+          <button type="submit" class="btn btn-lg btn-primary pull-xs-right">
+            {{ title }}
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
