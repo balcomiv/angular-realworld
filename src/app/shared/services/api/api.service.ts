@@ -12,24 +12,22 @@ export class ApiService {
 
   post(path: string, body): Observable<any> {
     return this.http
-      .post(
-        `${environment.api_url}${path}`,
-        JSON.stringify(body),
-        this.setHeaders()
-      )
+      .post(`${environment.api_url}${path}`, JSON.stringify(body), {
+        headers: this.setHeaders(),
+      })
       .pipe(catchError((error) => this.formatErrors(error)));
   }
 
-  private setHeaders(): any {
+  private setHeaders(): HttpHeaders {
     const headersConfig = {
       'Content-Type': 'application/json',
       Accept: 'application/json',
     };
 
-    return { headers: new HttpHeaders(headersConfig) };
+    return new HttpHeaders(headersConfig);
   }
 
-  private formatErrors(error: any): Observable<any> {
+  private formatErrors(error: any): Observable<JSON> {
     return of(error.json());
   }
 }

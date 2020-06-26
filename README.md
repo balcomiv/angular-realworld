@@ -30,3 +30,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 - https://thinkster.io/tutorials/building-real-world-angular-2-apps/page-layout-and-routing
 - https://thinkster.io/tutorials/building-real-world-angular-2-apps/formbuilder
+
+## API Spec
+
+- https://github.com/gothinkster/realworld/tree/master/api

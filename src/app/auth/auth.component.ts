@@ -6,11 +6,7 @@ import {
   FormControl,
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-
-enum AuthType {
-  Login = 'login',
-  Register = 'register',
-}
+import { AuthType } from '../shared/enums/auth-type.enum';
 
 @Component({
   selector: 'app-auth',
