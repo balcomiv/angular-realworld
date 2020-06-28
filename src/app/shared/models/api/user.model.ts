@@ -3,5 +3,5 @@ export class User {
   token: string;
   username: string;
   bio: string;
-  image: null;
+  image: string;
 }

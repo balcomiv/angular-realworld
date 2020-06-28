@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
@@ -15,7 +15,11 @@ export class ApiService {
       .post(`${environment.api_url}${path}`, JSON.stringify(body), {
         headers: this.setHeaders(),
       })
-      .pipe(catchError((error) => this.formatErrors(error)));
+      .pipe(
+        catchError((resp) => {
+          return throwError(resp.error);
+        })
+      );
   }
 
   private setHeaders(): HttpHeaders {
@@ -28,6 +32,7 @@ export class ApiService {
   }
 
   private formatErrors(error: any): Observable<JSON> {
-    return of(error.json());
+    console.log('formatErrors: ', error);
+    return of(error);
   }
 }

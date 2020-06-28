@@ -3,10 +3,16 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { ListErrorsComponent } from './list-errors/list-errors.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [ListErrorsComponent],
   imports: [CommonModule, ReactiveFormsModule, HttpClientModule, RouterModule],
-  exports: [CommonModule, ReactiveFormsModule, HttpClientModule],
+  exports: [
+    CommonModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    ListErrorsComponent,
+  ],
 })
 export class SharedModule {}

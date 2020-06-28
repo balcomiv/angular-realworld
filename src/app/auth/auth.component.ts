@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  FormGroup,
   FormBuilder,
-  Validators,
   FormControl,
+  FormGroup,
+  Validators,
 } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { AuthType } from '../shared/enums/auth-type.enum';
-
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthType, Errors, UserService } from '../shared';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
@@ -16,10 +15,18 @@ import { AuthType } from '../shared/enums/auth-type.enum';
 export class AuthComponent implements OnInit {
   authTypeLogin = false;
   title = '';
+  errors = new Errors();
   isSubmitting = false;
   authForm: FormGroup;
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder) {
+  private authType: AuthType;
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private userService: UserService,
+    private fb: FormBuilder
+  ) {
     this.authForm = this.fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
@@ -28,7 +35,7 @@ export class AuthComponent implements OnInit {
 
   ngOnInit(): void {
     //  Need to subscribe to route here, because Angular is smart enough to not re-init
-    //  when multiple routes, utilize the same component (I.E. login / register)
+    //  when multiple routes utilize the same component (I.E. login / register routes)
     /*
       Note:
       When subscribing to an observable in a component, you almost always unsubscribe when the component is destroyed.
@@ -38,12 +45,16 @@ export class AuthComponent implements OnInit {
     this.route.url.subscribe((data) => {
       //  Get the last piece of the URL (it's either 'login' or 'register')
       if (data[data.length - 1].path === AuthType.Login) {
+        this.authType = AuthType.Login;
         this.authTypeLogin = true;
       } else {
+        this.authType = AuthType.Register;
         this.authTypeLogin = false;
       }
+
       //  Set title for the page accordingly
       this.title = this.authTypeLogin ? 'Sign In' : 'Sign Up';
+
       //  Add form control for username if this is the register page
       if (!this.authTypeLogin) {
         this.authForm.addControl(
@@ -56,9 +67,18 @@ export class AuthComponent implements OnInit {
 
   submitForm() {
     this.isSubmitting = true;
+    this.errors = new Errors();
 
     const credentials = this.authForm.value;
-    //  Check out what you get!
-    console.log(credentials);
+    this.userService.attemptAuth(this.authType, credentials).subscribe(
+      () => this.router.navigateByUrl('/'),
+      (error) => {
+        console.log('Errors: ', error);
+        this.errors = error;
+        this.isSubmitting = false;
+
+        console.log(this.errors);
+      }
+    );
   }
 }

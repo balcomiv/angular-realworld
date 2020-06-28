@@ -13,6 +13,8 @@
           >
         </p>
 
+        <app-list-errors [errors]="errors"></app-list-errors>
+
         <!-- Auth Form -->
         <form [formGroup]="authForm" (ngSubmit)="submitForm()">
           <fieldSet class="form-group">
