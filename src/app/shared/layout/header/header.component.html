@@ -5,23 +5,49 @@
     <!-- Brand/Logo -->
     <a class="navbar-brand" routerLink="/">conduit</a>
 
-    <!-- Menu -->
-    <ul class="nav navbar-nav pull-xs-right">
-      <!-- Menu Item -->
+    <!-- Menu - Logged Out -->
+    <ul *appShowAuthed="false" class="nav navbar-nav pull-xs-right">
+      <!-- Home -->
       <li class="nav-item">
         <a class="nav-link" routerLink="/">Home</a>
       </li>
-      <!-- Menu Item -->
+      <!-- Sign In -->
       <li class="nav-item">
         <a class="nav-link" routerLink="/login" routerLinkActive="active">
           Sign in
         </a>
       </li>
-      <!-- Menu Item -->
+      <!-- Sign Up -->
       <li class="nav-item">
         <a class="nav-link" routerLink="/register" routerLinkActive="active">
           Sign up
         </a>
+      </li>
+    </ul>
+
+    <!-- Menu - Logged In -->
+    <ul *appShowAuthed="true" class="nav navbar-nav pull-xs-right">
+      <!-- Home -->
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          >Home</a
+        >
+      </li>
+      <!-- New Article -->
+      <li class="nav-item">
+        <a class="nav-link"> <i class="ion-compose"></i>&nbsp; New Article </a>
+      </li>
+      <!-- Settings -->
+      <li class="nav-item">
+        <a class="nav-link"><i class="ion-gear-a"></i> &nbsp;Settings</a>
+      </li>
+      <!-- My Profile -->
+      <li class="nav-item">
+        <a class="nav-link">My Profile</a>
       </li>
     </ul>
   </div>
