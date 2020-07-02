@@ -1,7 +1,7 @@
 export class User {
-  email: string;
-  token: string;
-  username: string;
-  bio: string;
-  image: string;
+  email = '';
+  token = '';
+  username = '';
+  bio: string | null = null;
+  image: string | null = null;
 }

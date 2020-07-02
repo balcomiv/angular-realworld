@@ -36,3 +36,9 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 - https://github.com/gothinkster/realworld/tree/master/api
 - https://conduit.productionready.io/api
+
+## Other Helpful Stuff
+
+LooseObject
+
+- https://stackoverflow.com/questions/12710905/how-do-i-dynamically-assign-properties-to-an-object-in-typescript

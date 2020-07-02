@@ -43,12 +43,31 @@
       </li>
       <!-- Settings -->
       <li class="nav-item">
-        <a class="nav-link"><i class="ion-gear-a"></i> &nbsp;Settings</a>
+        <a class="nav-link" routerLink="/settings" routerLinkActive="active">
+          <i class="ion-gear-a"></i> &nbsp;Settings
+        </a>
       </li>
       <!-- My Profile -->
       <li class="nav-item">
-        <a class="nav-link">My Profile</a>
+        <a
+          class="nav-link"
+          [routerLink]="['/profile', currentUser.username]"
+          routerLinkActive="active"
+        >
+          <img
+            *ngIf="currentUser.image"
+            class="user-pic"
+            [src]="currentUser.image"
+            alt="User Image"
+          />
+          {{ currentUser.username }}
+        </a>
       </li>
     </ul>
   </div>
 </nav>
+
+<!-- Testing -->
+<!-- <pre>
+  {{ currentUser | json }}
+</pre> -->

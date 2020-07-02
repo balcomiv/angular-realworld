@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 
 import { User } from '../../models/api/user.model';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { ApiService } from '../api/api.service';
 import { AuthType } from '../../enums/auth-type.enum';
+import { JwtService } from '../jwt/jwt.service';
+import { UserResponseDto } from '../../interfaces/api.interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private currentUserSubject = new BehaviorSubject<User>(new User());
-  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  private currentUserSubject = new ReplaySubject<User | null>(1);
+  private isAuthenticatedSubject = new ReplaySubject<boolean>(1);
 
   isAuthenticated = this.isAuthenticatedSubject.asObservable();
 
@@ -19,9 +21,12 @@ export class UserService {
     .asObservable()
     .pipe(distinctUntilChanged());
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private jwtService: JwtService) {}
 
   setAuth(user: User): void {
+    //  Save JWT sent from server in localstorage
+    this.jwtService.saveToken(user.token);
+
     //  Set current user data into observable
     this.currentUserSubject.next(user);
 
@@ -33,14 +38,39 @@ export class UserService {
     const route = authType === AuthType.Login ? '/login' : '';
 
     return this.apiService.post(`/users/${route}`, { user: credentials }).pipe(
-      map((data) => {
-        this.setAuth(data.user);
-        return data;
+      map((userResponse: UserResponseDto) => {
+        this.setAuth(userResponse.user);
+        return userResponse.user;
       })
     );
   }
 
-  getCurrentUser() {
-    return this.currentUserSubject.value;
+  // getCurrentUser() {
+  //   return this.currentUserSubject.value;
+  // }
+
+  /**
+   * Verify JWT in localstorage with server and load user's info.
+   * This should only run once on application startup.
+   */
+  populate(): void {
+    //  If JWT detected, attempt to get & store user's info
+    if (this.jwtService.getToken()) {
+      this.apiService.get('/user').subscribe(
+        (userResponse: UserResponseDto) => {
+          this.setAuth(userResponse.user);
+        },
+        (error) => this.purgeAuth()
+      );
+    }
+  }
+
+  purgeAuth(): void {
+    //  Remove JWT from localstorage
+    this.jwtService.destroyToken();
+    //  Set current user to an empty object
+    this.currentUserSubject.next();
+    //  Set auth status to false
+    this.isAuthenticatedSubject.next(false);
   }
 }
