@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthType, Errors, UserService } from '../shared';
+import { AuthType, Errors, UserService } from '../../shared';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',

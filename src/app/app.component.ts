@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { JwtService } from './shared/services/jwt/jwt.service';
 import { UserService } from './shared';
 
 @Component({
@@ -13,6 +12,10 @@ export class AppComponent implements OnInit {
   constructor(private userService: UserService) {}
 
   ngOnInit() {
+    //  When the app boots up we need to prepopulate the current user.
+    //  By hooking into the main AppComponent's ngOnInit method, we can
+    //  ensure that the User service will start resolving data before anything
+    //  else happens in our application.
     this.userService.populate();
   }
 }
