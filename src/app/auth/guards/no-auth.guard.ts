@@ -5,7 +5,7 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { UserService } from 'src/app/shared';
 
@@ -18,12 +18,10 @@ export class NoAuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean> {
     //  i.e. if isAuthenticated is false, set canActivate to true
-    this.userService.isAuthenticated.pipe(
+    return this.userService.isAuthenticated.pipe(
       map((bool) => !bool),
       tap(() => console.log('Yeah!')),
       take(1)
     );
-
-    return of(true);
   }
 }
