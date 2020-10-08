@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
-
-import { User } from '../../models/api/user.model';
-import { distinctUntilChanged, map, tap } from 'rxjs/operators';
-import { ApiService } from '../api/api.service';
+import { Observable, ReplaySubject } from 'rxjs';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 import { AuthType } from '../../enums/auth-type.enum';
-import { JwtService } from '../jwt/jwt.service';
 import { UserResponseDto } from '../../interfaces/api.interfaces';
+import { User } from '../../models/api/user.model';
+import { ApiService } from '../api/api.service';
+import { JwtService } from '../jwt/jwt.service';
 
 @Injectable({
   providedIn: 'root',
@@ -62,6 +61,9 @@ export class UserService {
         },
         (error) => this.purgeAuth()
       );
+    } else {
+      // Remove any potential remnants of previous auth states
+      this.purgeAuth();
     }
   }
 
