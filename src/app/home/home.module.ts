@@ -1,10 +1,9 @@
-import { CommonModule } from '@angular/common';
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { HomeComponent } from './home.component';
 import { SharedModule } from '../shared/shared.module';
+import { HomeComponent } from './home.component';
 
-const homeRouting: ModuleWithProviders = RouterModule.forChild([
+const homeRouting = RouterModule.forChild([
   { path: '', component: HomeComponent },
 ]);
 

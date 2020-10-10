@@ -39,6 +39,15 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Other Helpful Stuff
 
-LooseObject
+### LooseObject
 
 - https://stackoverflow.com/questions/12710905/how-do-i-dynamically-assign-properties-to-an-object-in-typescript
+
+### Update CLI Locally
+
+- npm install --save-dev @angular/cli@latest
+- npm install --seave-dev @angular/core@latest
+
+### Angular Wiki
+
+- https://www.angularjswiki.com/angular/update-angular-cli-version-ng-update-to-latest-6-7-versions/#:~:text=As%20I%20said%20above%2C%20Updating,by%20using%20ng%20update%20command.&text=If%20you%20are%20using%20Angular%20material%20You%20have%20to%20update,well%20using%20ng%20update%20command.&text=If%20you%20are%20using%20older%20versions%20other%20than%209.
