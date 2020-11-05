@@ -1,7 +1,7 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthGuard } from '../shared/guards/auth.guard';
+import { SharedModule } from '../shared/shared.module';
 import { SettingsComponent } from './settings.component';
 
 const settingsRouting = RouterModule.forChild([
@@ -10,6 +10,6 @@ const settingsRouting = RouterModule.forChild([
 
 @NgModule({
   declarations: [SettingsComponent],
-  imports: [CommonModule],
+  imports: [SharedModule, settingsRouting],
 })
 export class SettingsModule {}
